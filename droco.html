@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Website ROS Publisher</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/0.20.0/roslib.min.js"></script>
+    <script>
+        // Define ROS connection
+        var ros = new ROSLIB.Ros({
+            url: 'ws://192.168.30.202:9090'
+        });
+        
+        // Define ROS publisher
+        var publisher = new ROSLIB.Topic({
+            ros: ros,
+            name: '/website_data_topic',
+            messageType: 'std_msgs/String'
+        });
+        
+        // Send data to ROS on button click
+        function sendData() {
+            var input = document.getElementById('data-input').value;
+            var message = new ROSLIB.Message({
+                data: input
+            });
+            publisher.publish(message);
+        }
+    </script>
+</head>
+<body>
+    <h1>Website ROS Publisher</h1>
+    <label for="data-input">Data:</label>
+    <input type="text" id="data-input">
+    <button onclick="sendData()">Publish</button>
+</body>
+</html>
